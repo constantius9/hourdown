@@ -80,13 +80,15 @@ def save_everything(**kwargs):
 
 def load_everything():
     """Loads projects and date and returns them."""
+    fp = None
     try:
         fp = open('projects.json', 'r')
         projects = json.load(fp)
     except (IOError, ValueError):
         projects = dict()
     finally:
-        fp.close()
+        if fp:
+            fp.close()
 
     try:
         fp = open('date_time.json', 'r')
@@ -98,7 +100,8 @@ def load_everything():
         date_time = None
         hours_left = 0
     finally:
-        fp.close()
+        if fp:
+            fp.close()
     return projects, date_time, hours_left
 
 
