@@ -78,6 +78,16 @@ def save_everything(**kwargs):
     print 'Saved OK.'
 
 
+def calculate_hours_difference_from_now(future):
+    now = dt.datetime.now() 
+    return calculate_hours_difference(future, now)
+
+
+def calculate_hours_difference(future, now):
+    seconds_left = (future - now).total_seconds()
+    return round(seconds_left / 3600, 1)
+
+
 def load_everything():
     """Loads projects and date and returns them."""
     fp = None
