@@ -12,7 +12,7 @@ import datetime as dt
 class InputReactionTestCase(unittest.TestCase):
     
     @mock.patch('__builtin__.raw_input')
-    def test_inquiry(self, raw_input, ):
+    def test_inquiry(self, raw_input):
         """Tests user interaction"""
 
         patcher = mock.patch('sys.stdout')
