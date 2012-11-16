@@ -103,9 +103,8 @@ def load_everything():
     try:
         fp = open('date_time.json', 'r')
         date_time_str = json.load(fp)
-        date_time = dt.datetime.strptime(date_time_str, format_str)
-        seconds_left = (date_time - dt.datetime.now()).total_seconds()
-        hours_left = round(seconds_left / 3600, 1)
+        future = dt.datetime.strptime(date_time_str, format_str)
+        hours_left = calculate_hours_difference_from_now(future)
     except (IOError, ValueError):
         date_time = None
         hours_left = 0
@@ -144,7 +143,8 @@ def dispatch(choice, **kwargs):
     else:
         print 'Incorrect choice. Please try again.'
 
-    return date_time, projects
+    hours_left = calculate_hours_difference_from_now(date_time)
+    return projects, date_time, hours_left
 
 
 def main():
@@ -165,6 +165,6 @@ def main():
         if r == 'exit':
             sys.exit(0)
         else:
-            date_time, projects = r
+            projects, date_time, hours_left = r
 
 main()
