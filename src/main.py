@@ -106,9 +106,35 @@ def load_everything():
 
 
 def show_journal(projects):
-    """Show current time spendings."""
+    """Shows current time spendings."""
     for project, amount in projects.items():
         print '{0}: {1} hours.'.format(project, amount)
+
+
+def dispatch(choice, **kwargs):
+    """Performs action according to choice, modifying date_time and projects.
+
+    Returns 'exit' if action chosen is exiting the application.
+    """
+    date_time = kwargs['date_time']
+    projects = kwargs['projects']
+
+    if choice == '1':
+        date_time = set_date_time()
+    elif choice == '2':
+        projects = add_project(projects)
+    elif choice == '3':
+        projects = journal_spending(projects)
+    elif choice == '4':
+        show_journal(projects)
+    elif choice == '5':
+        save_everything(projects=projects, date_time=date_time)
+        print 'Bye.'
+        return 'exit'
+    else:
+        print 'Incorrect choice. Please try again.'
+
+    return date_time, projects
 
 
 def main():
@@ -125,19 +151,10 @@ def main():
         5 - Exit
         """.format(hours_left, date_time)
         choice = raw_input('Choose and action: ')
-        if choice == '1':
-            date_time = set_date_time()
-        elif choice == '2':
-            projects = add_project(projects)
-        elif choice == '3':
-            projects = journal_spending(projects)
-        elif choice == '4':
-            show_journal(projects)
-        elif choice == '5':
-            save_everything(projects=projects, date_time=date_time)
-            print 'Bye.'
+        r = dispatch(choice, date_time=date_time, projects=projects)
+        if r == 'exit':
             sys.exit(0)
         else:
-            print 'Incorrect choice. Please try again.'
+            date_time, projects = r
 
 main()
