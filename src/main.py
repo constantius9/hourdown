@@ -103,8 +103,8 @@ def load_everything():
     try:
         fp = open('date_time.json', 'r')
         date_time_str = json.load(fp)
-        future = dt.datetime.strptime(date_time_str, format_str)
-        hours_left = calculate_hours_difference_from_now(future)
+        date_time = dt.datetime.strptime(date_time_str, format_str)
+        hours_left = calculate_hours_difference_from_now(date_time)
     except (IOError, ValueError):
         date_time = None
         hours_left = 0
