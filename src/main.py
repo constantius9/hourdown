@@ -147,24 +147,34 @@ def dispatch(choice, **kwargs):
     return projects, date_time, hours_left
 
 
+def inquiry(**kwargs):
+    """Asks user what does he want to do."""
+
+    hours_left = kwargs['hours_left']
+    date_time = kwargs['date_time']
+    print """You have {0} hours left. Set date is {1}.
+    Choose action:
+    1 - Set time/date
+    2 - Add a project
+    3 - Journal time spending
+    4 - Show journal
+    5 - Exit
+    """.format(hours_left, date_time)
+    return raw_input('Choose the action: ')
+
+
 def main():
     """Main loop"""
 
     projects, date_time, hours_left = load_everything()
     while True:
-        print """You have {0} hours left. Set date is {1}.
-        Choose action:
-        1 - Set time/date
-        2 - Add a project
-        3 - Journal time spending
-        4 - Show journal
-        5 - Exit
-        """.format(hours_left, date_time)
-        choice = raw_input('Choose the action: ')
+        choice = inquiry(date_time=date_time, hours_left=hours_left)
         r = dispatch(choice, date_time=date_time, projects=projects)
         if r == 'exit':
             sys.exit(0)
         else:
             projects, date_time, hours_left = r
 
-main()
+
+if __name__ == "__main__":
+    main()
