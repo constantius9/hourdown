@@ -150,7 +150,7 @@ def main():
         4 - Show journal
         5 - Exit
         """.format(hours_left, date_time)
-        choice = raw_input('Choose and action: ')
+        choice = raw_input('Choose the action: ')
         r = dispatch(choice, date_time=date_time, projects=projects)
         if r == 'exit':
             sys.exit(0)
