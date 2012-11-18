@@ -54,10 +54,10 @@ class InputReactionTestCase(unittest.TestCase):
     def test_inquiry(self, raw_input):
         """Tests user interaction"""
 
-        patcher = mock.patch('sys.stdout')
-        patcher.start()
-        patcher2 = mock.patch('datetime.datetime')
-        patcher2.start()
+        patcher_stdout = mock.patch('sys.stdout')
+        patcher_stdout.start()
+        patcher_datetime = mock.patch('datetime.datetime')
+        patcher_datetime.start()
 
         raw_input.return_value = '1'
         choice = main.inquiry(hours_left=100, date_time=dt.datetime.now())
@@ -75,11 +75,18 @@ class InputReactionTestCase(unittest.TestCase):
         choice = main.inquiry(hours_left=100, date_time=dt.datetime.now())
         self.assertEquals(choice, '5')
 
-        patcher.stop()
-        patcher2.stop()
+        patcher_stdout.stop()
+        patcher_datetime.stop()
 
     def test_dispatch(self):
         pass
+
+
+def suite():
+    suite = unittest.TestSuite()
+    suite.addTest(StdoutOutputTestCase)
+    suite.addTest(InputReactionTestCase)
+    return suite
 
 
 if __name__ == "__main__":
