@@ -148,6 +148,11 @@ def dispatch(choice, **kwargs):
     return projects, date_time, hours_left
 
 
+def print_info(date_time, hours_left):
+    print "You have {0} hours left. Set date is {1}.".format(
+        hours_left, date_time)
+
+
 def print_actions():
     s = """
     Choose action:
@@ -166,8 +171,7 @@ def inquiry(**kwargs):
 
     hours_left = kwargs['hours_left']
     date_time = kwargs['date_time']
-    print "You have {0} hours left. Set date is {1}.".format(
-        hours_left, date_time)
+    print_info(date_time, hours_left)
     print_actions()
     return raw_input('Choose the action: ')
 

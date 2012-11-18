@@ -16,11 +16,19 @@ class StdoutOutputTestCase(unittest.TestCase):
     """Tests whether the stuff is printed correctly."""
 
     def setUp(self):
-        self.patcher = mock.patch('sys.stdout', StringIO())
-        self.patcher.start()
+        self.patcher_stdout = mock.patch('sys.stdout', StringIO())
+        self.patcher_stdout.start()
 
     def test_show_info(self):
-        pass
+        patcher_datetime = mock.patch('datetime.datetime')
+        patcher_datetime.start()
+        date, hours_left = dt.datetime.now(), 100
+        s = "You have {0} hours left. Set date is {1}.\n".format(
+            hours_left, date)
+        main.print_info(date, hours_left)
+        self.assertEquals(sys.stdout.getvalue(), s)
+        patcher_datetime.stop()
+        sys.stdout.truncate(0)
 
     def test_show_actions(self):
         main.print_actions()
@@ -33,9 +41,10 @@ class StdoutOutputTestCase(unittest.TestCase):
                 5 - Exit
             """
         self.assertEquals(sys.stdout.getvalue(), dedent(s))
+        sys.stdout.truncate(0)
 
     def tearDown(self):
-        self.patcher.stop()
+        self.patcher_stdout.stop()
 
 
 class InputReactionTestCase(unittest.TestCase):
