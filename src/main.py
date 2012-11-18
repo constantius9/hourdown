@@ -8,6 +8,7 @@ Currently works in interactive mode only.
 import datetime as dt
 import json
 import sys
+from textwrap import dedent
 
 
 """Format string of datetime"""
@@ -147,19 +148,27 @@ def dispatch(choice, **kwargs):
     return projects, date_time, hours_left
 
 
+def print_actions():
+    s = """
+    Choose action:
+        1 - Set time/date
+        2 - Add a project
+        3 - Journal time spending
+        4 - Show journal
+        5 - Exit
+    """
+    # Note the comma to supress the additional newline
+    print dedent(s), 
+
+
 def inquiry(**kwargs):
     """Asks user what does he want to do."""
 
     hours_left = kwargs['hours_left']
     date_time = kwargs['date_time']
-    print """You have {0} hours left. Set date is {1}.
-    Choose action:
-    1 - Set time/date
-    2 - Add a project
-    3 - Journal time spending
-    4 - Show journal
-    5 - Exit
-    """.format(hours_left, date_time)
+    print "You have {0} hours left. Set date is {1}.".format(
+        hours_left, date_time)
+    print_actions()
     return raw_input('Choose the action: ')
 
 

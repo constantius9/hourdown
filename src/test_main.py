@@ -7,6 +7,7 @@ import unittest
 from StringIO import StringIO
 import datetime as dt
 import sys
+from textwrap import dedent
 
 import main
 
@@ -15,24 +16,26 @@ class StdoutOutputTestCase(unittest.TestCase):
     """Tests whether the stuff is printed correctly."""
 
     def setUp(self):
-        sys.stdout = self.captured = StringIO()
+        self.patcher = mock.patch('sys.stdout', StringIO())
+        self.patcher.start()
 
     def test_show_info(self):
         pass
 
     def test_show_actions(self):
         main.print_actions()
-        self.assertEquals(self.captured,
-            """Choose action:
-            1 - Set time/date
-            2 - Add a project
-            3 - Journal time spending
-            4 - Show journal
-            5 - Exit
-            """)
+        s = """
+            Choose action:
+                1 - Set time/date
+                2 - Add a project
+                3 - Journal time spending
+                4 - Show journal
+                5 - Exit
+            """
+        self.assertEquals(sys.stdout.getvalue(), dedent(s))
 
     def tearDown(self):
-        sys.stdout = sys.__stdout__
+        self.patcher.stop()
 
 
 class InputReactionTestCase(unittest.TestCase):
