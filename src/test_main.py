@@ -4,7 +4,9 @@
 
 import mock
 import unittest
-from StringIO
+from StringIO import StringIO
+import datetime as dt
+import sys
 
 import main
 
@@ -63,7 +65,6 @@ class InputReactionTestCase(unittest.TestCase):
 
         patcher.stop()
         patcher2.stop()
-
 
     def test_dispatch(self):
         pass
