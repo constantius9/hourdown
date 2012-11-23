@@ -12,12 +12,21 @@ from textwrap import dedent
 import main
 
 
-class StdoutOutputTestCase(unittest.TestCase):
-    """Tests whether the stuff is printed correctly."""
-
+class MockedStdoutTestCase(unittest.TestCase):
+    """Testing superclass, which mocks the sys.stdout."""
     def setUp(self):
         self.patcher_stdout = mock.patch('sys.stdout', StringIO())
         self.patcher_stdout.start()
+
+    def tearDown(self):
+        self.patcher_stdout.stop()
+
+
+class StdoutOutputTestCase(MockedStdoutTestCase):
+    """Tests whether the stuff is printed correctly."""
+
+    def setUp(self):
+        super(StdoutOutputTestCase, self).setUp()
 
     def test_show_info(self):
         patcher_datetime = mock.patch('datetime.datetime')
@@ -44,11 +53,14 @@ class StdoutOutputTestCase(unittest.TestCase):
         sys.stdout.truncate(0)
 
     def tearDown(self):
-        self.patcher_stdout.stop()
+        super(StdoutOutputTestCase, self).tearDown()
 
 
-class InputReactionTestCase(unittest.TestCase):
+class InputReactionTestCase(MockedStdoutTestCase):
     """Tests whether the user input is handled correctly."""    
+
+    def setUp(self):
+        super(InputReactionTestCase, self).setUp()
 
     @mock.patch('__builtin__.raw_input')
     def test_inquiry(self, raw_input):
@@ -81,12 +93,8 @@ class InputReactionTestCase(unittest.TestCase):
     def test_dispatch(self):
         pass
 
-
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(StdoutOutputTestCase)
-    suite.addTest(InputReactionTestCase)
-    return suite
+    def tearDown(self):
+        super(InputReactionTestCase, self).tearDown()
 
 
 if __name__ == "__main__":
