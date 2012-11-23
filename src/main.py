@@ -9,6 +9,16 @@ import datetime as dt
 import json
 import sys
 from textwrap import dedent
+from functools import wraps
+
+
+def log_call(f):
+    @wraps
+    def wrapper(*args, **kwargs):
+        wrapper.has_been_called = True
+        return f(*args, **kwargs)
+    wrapper.has_been_called = False
+    return wrapper
 
 
 """Format string of datetime"""
