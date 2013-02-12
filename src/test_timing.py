@@ -8,8 +8,8 @@ import unittest
 class FacilitiesTest(unittest.TestCase):
     def testFactorADayFullScheme(self):
         day = Day()
-        scheme = '8h-2×2h:4×1h:8×30m:16×15m'
-        day.factor(scheme)
+        schema = '8h-2×2h:4×1h:8×30m:16×15m'
+        day.factor(schema)
         self.assertEqual(day.slots['2h'], 2)
         self.assertEqual(day.slots['1h'], 4)
         self.assertEqual(day.slots['30m'], 8)
@@ -18,8 +18,8 @@ class FacilitiesTest(unittest.TestCase):
 
     def testFactorADayContractedScheme(self):
         day = Day()
-        scheme = '2×2h:4×1h:8×30m:16×15m'
-        day.factor(scheme)
+        schema = '2×2h:4×1h:8×30m:16×15m'
+        day.factor(schema)
         self.assertEqual(day.slots['2h'], 2)
         self.assertEqual(day.slots['1h'], 4)
         self.assertEqual(day.slots['30m'], 8)
