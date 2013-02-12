@@ -26,6 +26,13 @@ class FacilitiesTest(unittest.TestCase):
         self.assertEqual(len(day.slots['15m']), 16)
         self.assertEqual(day.sleep, '8h')
 
+    def testFactorAWeekFullScheme(self):
+        week = Week()
+        scheme = '5wd:2we'
+        week.factor(schema)
+        self.assertEqual(len(week.workdays), 5)
+        self.assertEqual(len(week.weekends), 2)
+
 
 if __name__ == '__main__':
     unittest.main()
